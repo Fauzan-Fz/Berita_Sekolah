@@ -76,8 +76,15 @@ class ImageStore
             return;
         }
 
-        // Sanitasi path: hilangkan traversal "../" dan batasi pada direktori upload yang sah
-        $cleanPath = ltrim(str_replace(['../', '..\\'], '', $path), '/\\');
+        // Sanitasi path: hilangkan traversal "../" berulang hingga fixpoint
+        // (satu pass str_replace lolos untuk pola nested seperti "....//"),
+        // lalu batasi pada direktori upload yang sah
+        $cleanPath = ltrim($path, '/\\');
+        do {
+            $previous = $cleanPath;
+            $cleanPath = str_replace(['../', '..\\'], '', $cleanPath);
+        } while ($cleanPath !== $previous);
+        $cleanPath = ltrim($cleanPath, '/\\');
         if (! str_starts_with($cleanPath, 'cover/') && ! str_starts_with($cleanPath, 'profile/')) {
             return; // Tolak penghapusan berkas di luar folder upload yang diizinkan
         }

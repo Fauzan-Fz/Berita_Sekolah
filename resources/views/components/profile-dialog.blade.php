@@ -34,7 +34,7 @@
                 <div class="flex items-center gap-4 p-4 rounded-lg border border-line bg-canvas-alt">
                     <div class="relative shrink-0">
                         <div class="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full bg-slate-800 text-[20px] font-bold text-white">
-                            <img data-avatar-preview data-src="{{ $photo }}" src="{{ $photo }}" alt="{{ $user->name }}" class="h-full w-full object-cover {{ $photo ? '' : 'hidden' }}">
+                            <img data-avatar-preview data-src="{{ $photo }}" @if ($photo) src="{{ $photo }}" @endif alt="{{ $user->name }}" class="h-full w-full object-cover {{ $photo ? '' : 'hidden' }}">
                             <span data-avatar-placeholder class="{{ $photo ? 'hidden' : '' }}">{{ $initial }}</span>
                         </div>
                         <label class="absolute -bottom-1 -right-1 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-white bg-accent text-white shadow-xs" aria-label="Ubah foto profil">
@@ -69,7 +69,7 @@
                               data-bio-input
                               class="mt-1.5 w-full rounded-md border border-line bg-canvas px-3 py-2 text-[14px] text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none focus:ring-1 focus:ring-accent">{{ old('bio', $user->bio) }}</textarea>
                     <p class="mt-1.5 text-right text-[11px] text-ink-faint">
-                        <span data-bio-count>{{ $bioMax - mb_strlen($user->bio) }}</span> characters remaining
+                        <span data-bio-count>{{ $bioMax - mb_strlen($user->bio ?? '') }}</span> characters remaining
                     </p>
                 </div>
             </form>
