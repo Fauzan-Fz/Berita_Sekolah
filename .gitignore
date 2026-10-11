@@ -36,3 +36,4 @@ PRD.md
 /.needmcp/
 /.playwright-cli/
 /graphify-out/
+/.orca/
